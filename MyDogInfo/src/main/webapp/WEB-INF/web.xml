@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<!-- applicationContext.xml 파일의 경로를 변경하는 설정 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+	</context-param>
+	
+	<!-- 프로젝트가 시작 될 때와 종료 될 때 호출할 파일 설정 -->
+	<!-- 기본은 WEB-INF 디렉토리의 applicationContext.xml -->
+	<!-- 이 파일에 작성된 bean은 모든 곳에서 사용 가능 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- 서블릿 설정 파일의 위치 설정 -->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+		<!-- 프로젝트가 시작하자 마자 읽어달라고 설정 -->
+		<!-- load-on-startup 설정이 없으면 첫 번째 요청이 왔을 때 파일을 읽게 됨 -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<!-- 어떤 요청이 왔을 때(요청의 종류) 어떤 곳에 있는 Controller가 처리하는 지 지정 -->
+	<servlet-mapping>
+	<!-- 요청이 왔을 때 appServlet에 있는 Controller가 처리 -->
+		<servlet-name>appServlet</servlet-name>
+		<!-- / : .jsp를 제외한 모든 요청이 오면 처리 -->
+		<!-- /* : 모든 요청이 오면 -->
+		<!-- *.확장자 : 확장자로 끝나는 모든 요청이 오면 -->
+		<!-- /디렉토리/* : 디렉토리가 포함된 모든 요청이 오면 -->
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+</web-app>

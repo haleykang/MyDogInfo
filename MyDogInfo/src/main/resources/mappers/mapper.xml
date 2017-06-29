@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 위의 부분은 고치면 안되는 설정 부분이기 때문에 복사해서 붙여 넣기 -->
+
+
+<!-- namespace="주로 테이블 이름" -->
+<mapper namespace="DogInfo">
+	<!-- 1. insert() 함수의 SQL 구현 : public int insert(DogInfo dogInfo) -->
+	<insert id="insert" parameterType="com.haley.mydog.domain.DogInfo">
+		insert into doginfo values(#{code},#{dname},#{age},#{gender})
+		<!-- id : 자바 코드에서 불러올 이름 -->
+		<!-- resultType : return 값의 자료형 -->
+		<!-- parameterType : 매개변수 값 -->
+	</insert>
+
+
+	<!-- 2. selectAll() 함수의 SQL 구현 : public List<DogInfo> selectAll(); -->
+	<select id="selectAll" resultType="com.haley.mydog.domain.DogInfo">
+		select *
+		from doginfo
+		<!-- id : 자바 코드에서 불러올 이름 -->
+		<!-- resultType : return 값의 자료형 -->
+		<!-- -> select가 * 이므로 모든 컬럼을 다 받을 수 있는 값을 넣어야 함 -->
+		<!-- -> java.util.Map 또는 DTO 클래스의 위치(정확하게) -->
+		<!-- parameterType : 매개변수 값 -->
+	</select>
+
+	<!-- 3. selectOne() 함수의 SQL 구현 : public DogInfo selectOne(int code) -->
+	<select id="selectOne" resultType="com.haley.mydog.domain.DogInfo"
+		parameterType="java.lang.Integer">
+		select *
+		from doginfo
+		where code = #{code}
+	</select>
+
+	<!-- 4. update() 함수의 SQL 구현 : public int update(DogInfo dogInfo) -->
+	<update id="update" parameterType="com.haley.mydog.domain.DogInfo">
+		update doginfo
+		set
+		dname=#{dname}, age=#{age}, gender=#{gender}
+		where code = #{code}
+	</update>
+
+	<!-- 5. delete() 함수의 SQL 구현 : public int delete(int code) -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from doginfo
+		where code = #{code}
+	</delete>
+
+
+</mapper>
